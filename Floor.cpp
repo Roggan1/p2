@@ -33,3 +33,10 @@ char Floor::getSymbol()
     }
 }
 
+void Floor::onEnter(Character* c, Tile* fromTile) {
+    m_Char = c;
+    if (ItemGround) {
+        m_Char->addItem(ItemGround);
+        ItemGround = nullptr;
+    }
+}

@@ -48,6 +48,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Passive.o \
 	${OBJECTDIR}/Switch.o \
 	${OBJECTDIR}/Tile.o \
+	${OBJECTDIR}/Trap.o \
 	${OBJECTDIR}/Wall.o \
 	${OBJECTDIR}/main.o
 
@@ -140,6 +141,11 @@ ${OBJECTDIR}/Tile.o: Tile.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Tile.o Tile.cpp
+
+${OBJECTDIR}/Trap.o: Trap.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Trap.o Trap.cpp
 
 ${OBJECTDIR}/Wall.o: Wall.cpp
 	${MKDIR} -p ${OBJECTDIR}

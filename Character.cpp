@@ -90,3 +90,8 @@ int Character::getStrength()
     }
     return strength+StreGes;
 }
+
+int Character::loseHP(int Dmg)
+{
+    hitpoints = hitpoints - Dmg;
+}

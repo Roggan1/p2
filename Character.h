@@ -34,6 +34,7 @@ public:
     int getStamina();
     
     void addItem(Item*);
+    int loseHP(int Dmg);
     
     void showInfo();
     

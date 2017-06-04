@@ -37,8 +37,5 @@ void Passive::setStatus(bool Status)
     m_Status = Status;
 }
 
-void Passive::onEnter(Character* c, Tile* fromTile)
-{
-    
-}
+
 

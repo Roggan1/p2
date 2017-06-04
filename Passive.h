@@ -23,7 +23,7 @@ public:
     void setStatus(bool Status);
     
     virtual char getSymbol() override;
-    virtual void onEnter(Character* c, Tile* fromTile) override;
+
 
     Passive();
 

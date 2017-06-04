@@ -5,29 +5,30 @@
  */
 
 /* 
- * File:   Floor.h
+ * File:   Trap.h
  * Author: stud
  *
- * Created on 21. Mai 2017, 14:13
+ * Created on 4. Juni 2017, 15:50
  */
 
-#ifndef FLOOR_H
-#define FLOOR_H
-#include "Tile.h"
+#ifndef TRAP_H
+#define TRAP_H
+#include "Active.h"
 
-class Floor : public Tile
+class Trap : public Passive
 {
 public:
-    Floor();
     char getSymbol() override;
     void onEnter(Character* c, Tile* fromTile) override;
 
-    virtual ~Floor();
+
+
+    Trap();
+
+    virtual ~Trap();
 private:
 
-    Item* ItemGround;
-    
 };
 
-#endif /* FLOOR_H */
+#endif /* TRAP_H */
 
