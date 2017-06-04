@@ -24,7 +24,7 @@ public:
     virtual ~Floor();
 private:
 
-    Item* Item;
+    Item* ItemGround;
     
 };
 

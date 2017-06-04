@@ -23,7 +23,7 @@ Floor::~Floor()
 
 char Floor::getSymbol()
 {
-    if (Item)
+    if (ItemGround)
     {
         return '*';
     }
