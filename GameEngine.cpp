@@ -8,9 +8,10 @@
 
 
 #include "GameEngine.h"
+#include <sstream>
 
 GameEngine::GameEngine(int height, int width, const vector<string>& data, const vector<string>& do_swi) : m_map(height, width, data) {
-    m_Chars.push_back(new Character('+'));
+    m_Chars.push_back(new Character('+',5,5));
     m_Controllers.push_back(new ConsoleController(m_Chars[0]));
     
     Position tmp;
@@ -19,13 +20,22 @@ GameEngine::GameEngine(int height, int width, const vector<string>& data, const 
     m_map.place(tmp,m_Chars[0]);
     
     //Interpreter Door/Switch
+    stringstream ss;
+    int Sx = 0;
+    int Sy = 0;
+    int Dx = 0;
+    int Dy = 0;
+    
     for(int i = 0; i< do_swi.size(); i++)
     {
+        ss.str(do_swi[i]);
+        ss >> Dx >> Dy >> Sx >> Sy;
+        ss.clear();
         Position D,S;                   //string-stream
-        D.heigth=do_swi[i].at(0)-48;
-        D.width=do_swi[i].at(1)-48;
-        S.heigth=do_swi[i].at(3)-48;
-        S.width=do_swi[i].at(4)-48;
+        D.heigth=Dx;
+        D.width=Dy;
+        S.heigth=Sx;
+        S.width=Sy;
         
         m_map.placeDoor_Switch(D,S);
     }
@@ -101,6 +111,7 @@ void GameEngine::turn(){
 
 void GameEngine::run(){
     while(!finished()){
+        m_Chars[0]->showInfo();
         m_map.print();
         turn();
     }

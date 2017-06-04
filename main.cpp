@@ -26,8 +26,8 @@ int main() {
         "##########",
     };
     vector<string> do_swi{
-        "44 88 ",
-        "83 27 ",        
+        "4 4 8 8 ",
+        "8 3 2 7 ",        
     };
     GameEngine ge(10,10,data,do_swi);
     ge.run();

@@ -14,6 +14,8 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 #include <iostream>
+#include <vector>
+#include "Item.h"
 
 using namespace std;
 
@@ -27,12 +29,24 @@ public:
     char getFigur() const;
     int move() const;
     
-    Character(char Figur);
+    int getMaxHP();
+    int getStrength();
+    int getStamina();
+    
+    void addItem(Item*);
+    
+    void showInfo();
+    
+    Character(char Figur,int Str, int Sta);
     virtual ~Character();
 private:
-
+    int strength;
+    int stamina;
+    int hitpoints;
+    
     char m_Figur;
     Controller* m_Controller;
+    vector<Item*> Items;
 };
 
 #endif /* CHARACTER_H */
