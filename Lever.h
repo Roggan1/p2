@@ -20,6 +20,9 @@ using namespace std;
 class Lever : public Active
 {
 public:
+    Lever();
+    virtual ~Lever();
+    
     char getSymbol() override;
     void onEnter(Character* Char, Tile* fromTile) override;
 
