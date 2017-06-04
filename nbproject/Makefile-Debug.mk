@@ -46,6 +46,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Item.o \
 	${OBJECTDIR}/Lever.o \
 	${OBJECTDIR}/Passive.o \
+	${OBJECTDIR}/StationaryController.o \
 	${OBJECTDIR}/Switch.o \
 	${OBJECTDIR}/Tile.o \
 	${OBJECTDIR}/Trap.o \
@@ -131,6 +132,11 @@ ${OBJECTDIR}/Passive.o: Passive.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Passive.o Passive.cpp
+
+${OBJECTDIR}/StationaryController.o: StationaryController.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/StationaryController.o StationaryController.cpp
 
 ${OBJECTDIR}/Switch.o: Switch.cpp
 	${MKDIR} -p ${OBJECTDIR}

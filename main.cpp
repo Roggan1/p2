@@ -33,3 +33,7 @@ int main() {
     ge.run();
 }
 
+void loadFromFile(string filename)
+{
+    
+}
