@@ -13,16 +13,7 @@
 #include "Item.h"
 
 GameEngine::GameEngine(int height, int width, const vector<string>& data, const vector<string>& specialTiles) : m_map(height, width, data) {
-    /*
-    m_Chars.push_back(new Character('+',5,5));
-    m_Controllers.push_back(new ConsoleController(m_Chars[0]));
     
-    Position tmp;
-    tmp.heigth=6;
-    tmp.width=6;
-    m_map.place(tmp,m_Chars[0]);
-    */
-    //Interpreter Door/Switch
     stringstream ss;
     
     string cmd1;
@@ -52,6 +43,13 @@ GameEngine::GameEngine(int height, int width, const vector<string>& data, const 
                 tmp.heigth=param3;
                 tmp.width=param4;
                 m_map.place(tmp,m_Chars[m_Chars.size()-1]);
+        }else if(cmd1=="ArmingSword"){
+                ss>>param1>>param2;
+                ss.clear();
+                Position tmp;
+                tmp.heigth=param1;
+                tmp.width=param2;
+                m_map.placeItem(tmp, new ArmingSword);
         }else if(cmd1=="Greatsword"){
                 ss>>param1>>param2;
                 ss.clear();
@@ -59,6 +57,48 @@ GameEngine::GameEngine(int height, int width, const vector<string>& data, const 
                 tmp.heigth=param1;
                 tmp.width=param2;
                 m_map.placeItem(tmp, new GreatSword);
+        }else if(cmd1=="Club"){
+                ss>>param1>>param2;
+                ss.clear();
+                Position tmp;
+                tmp.heigth=param1;
+                tmp.width=param2;
+                m_map.placeItem(tmp, new Club);
+        }else if(cmd1=="RapierOrDagger"){
+                ss>>param1>>param2;
+                ss.clear();
+                Position tmp;
+                tmp.heigth=param1;
+                tmp.width=param2;
+                m_map.placeItem(tmp, new RapierOrDagger);
+        }else if(cmd1=="Gambeson"){
+                ss>>param1>>param2;
+                ss.clear();
+                Position tmp;
+                tmp.heigth=param1;
+                tmp.width=param2;
+                m_map.placeItem(tmp, new Gambeson);
+        }else if(cmd1=="MailArmour"){
+                ss>>param1>>param2;
+                ss.clear();
+                Position tmp;
+                tmp.heigth=param1;
+                tmp.width=param2;
+                m_map.placeItem(tmp, new MailArmour);
+        }else if(cmd1=="Shield"){
+                ss>>param1>>param2;
+                ss.clear();
+                Position tmp;
+                tmp.heigth=param1;
+                tmp.width=param2;
+                m_map.placeItem(tmp, new Shield);
+        }else if(cmd1=="FullPlateArmour"){
+                ss>>param1>>param2;
+                ss.clear();
+                Position tmp;
+                tmp.heigth=param1;
+                tmp.width=param2;
+                m_map.placeItem(tmp, new FullPlateArmour);
         }else if(cmd1=="Door"){
                 ss>>param1>>param2>>cmd2>>param3>>param4;
                 ss.clear();
@@ -81,21 +121,7 @@ GameEngine::GameEngine(int height, int width, const vector<string>& data, const 
                 tmp.width=param2;
                 m_map.placeSpecialTile(tmp,new Trap);
         }
-       
-      
-        
-        
-        
-        
-        /*
-        Position D,S;                   
-        D.heigth=Dx;
-        D.width=Dy;
-        S.heigth=Sx;
-        S.width=Sy;
-        
-        m_map.placeDoor_Switch(D,S);
-         */
+   
    }     
 }
 
