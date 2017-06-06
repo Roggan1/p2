@@ -39,3 +39,72 @@ private:
 };
 #endif /* ITEM_H */
 
+class ArmingSword : public Item {
+public:
+
+    ArmingSword();
+    virtual ~ArmingSword(); 
+
+    int modifyStamina(int stamina) override;
+    int modifyStrength(int strength) override;
+};
+
+class Club : public Item {
+public:
+
+    Club();
+    virtual ~Club();
+
+    int modifyStamina(int stamina) override;
+    int modifyStrength(int strength) override;
+};
+
+class RapierOrDagger : public Item {
+public:
+
+    RapierOrDagger();
+    virtual ~RapierOrDagger();
+
+    int modifyStamina(int stamina) override;
+    int modifyStrength(int strength) override;
+};
+
+class Gambeson : public Item {
+public:
+
+    Gambeson();
+    virtual ~Gambeson();
+
+    int modifyStamina(int stamina) override;
+    int modifyStrength(int strength) override;
+};
+
+class MailArmour : public Item {
+public:
+
+    MailArmour();
+    virtual ~MailArmour();
+
+    int modifyStamina(int stamina) override;
+    int modifyStrength(int strength) override;
+};
+
+class Shield : public Item {
+public:
+
+    Shield();
+    virtual ~Shield();
+
+    int modifyStamina(int stamina) override;
+    int modifyStrength(int strength) override;
+};
+
+class FullPlateArmour : public Item {
+public:
+
+    FullPlateArmour();
+    virtual ~FullPlateArmour();
+    
+    int modifyStamina(int stamina) override;
+    int modifyStrength(int strength) override;
+};
