@@ -143,14 +143,14 @@ void DungeonMap::print(Position from)
         cout << endl;
         for (int j = 0; j < m_width; j++)
         {
-            if (m_data[i][j]->hasCharacter())
+            if (m_data[i][j]->hasCharacter()&&hasLineOfSight(from,findTile(m_data[i][j])))
             {
                 cout << m_data[i][j]->getChar()->getFigur()<<" ";
             }
             else if(hasLineOfSight(from,findTile(m_data[i][j]))){
                 cout<<m_data[i][j]->getSymbol()<<" ";
             }
-            else
+            else 
             {
                 cout<<"# ";
             }
@@ -210,9 +210,7 @@ bool DungeonMap::hasLineOfSight(Position from, Position to)
             y=y+ystep;
         }
     }
-    if(m_data[x][y]->isTransparent()==false){
-              return false;
-          }else{
+   
     return true;
-          }
+     
 }
