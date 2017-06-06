@@ -29,7 +29,7 @@ int main() {
         "Character @ 5 5 ConsoleController 8 8",
         "Character % 2 3 StationaryController 3 4",
         "Greatsword 1 4",
-        "Door 5 5 Lever 7 7",
+        "Door 4 4 Lever 7 7",
         "Trap 6 6"        
     };
     GameEngine ge(10,10,data,specialTiles);

@@ -76,7 +76,7 @@ void DungeonMap::placePassive_Active(Position P, Position A, Passive* pass, Acti
     m_data[P.heigth][P.width]=pass;
     m_data[A.heigth][A.width]=act;
     
-     dynamic_cast<Switch*>(m_data [A.heigth][A.width])->setP_Objekt(dynamic_cast<Passive*>(m_data[P.heigth][P.width]));
+     dynamic_cast<Active*>(m_data [A.heigth][A.width])->setP_Objekt(dynamic_cast<Passive*>(m_data[P.heigth][P.width]));
     
 }
 
@@ -145,7 +145,7 @@ void DungeonMap::print(Position from)
         {
             if (m_data[i][j]->hasCharacter())
             {
-                cout << "+ ";
+                cout << m_data[i][j]->getChar()->getFigur()<<" ";
             }
             else if(hasLineOfSight(from,findTile(m_data[i][j]))){
                 cout<<m_data[i][j]->getSymbol()<<" ";
@@ -164,15 +164,15 @@ bool DungeonMap::hasLineOfSight(Position from, Position to)
     int dx, dy;
     
     if (from.heigth>to.heigth){
-     dx=from.heigth-to.heigth;
+     dx=from.heigth-to.heigth+1;
     }else{
-         dx=to.heigth-from.heigth;
+         dx=to.heigth-from.heigth+1;
     }
     
     if (from.width>to.width){
-     dy=from.width-to.width;
+     dy=from.width-to.width+1;
     }else{
-        dy=to.width-from.width;
+        dy=to.width-from.width+1;
     }
     
     int x = to.heigth;
