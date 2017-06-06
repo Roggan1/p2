@@ -37,13 +37,15 @@ char Lever::getSymbol()
 void Lever::onEnter(Character* Char, Tile* fromTile)
 {
     m_Char = Char;
-    m_P_Objekt->setStatus(true);
+    
     if (m_Used)
     {
         m_Used = false;
+        m_P_Objekt->setStatus(false);
     }
     else 
     {
+        m_P_Objekt->setStatus(true);
         m_Used = true;
     }
 }
