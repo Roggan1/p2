@@ -161,39 +161,58 @@ void DungeonMap::print(Position from)
 
 bool DungeonMap::hasLineOfSight(Position from, Position to)
 {
-    int dx, dy;
+    int x=from.heigth;
+    int y=from.width;
     
-    if (from.heigth>to.heigth){
-     dx=from.heigth-to.heigth+1;
-    }else{
-         dx=to.heigth-from.heigth+1;
+    int dx =to.heigth-from.heigth;
+    int dy =to.width-from.width;
+    int xstep=1;
+    int ystep=1;
+       
+    if(dx<0){
+        dx=-dx;
+        xstep=-1;
     }
     
-    if (from.width>to.width){
-     dy=from.width-to.width+1;
-    }else{
-        dy=to.width-from.width+1;
+    if(dy<0){
+        dy=-dy;
+        ystep=-1;
     }
+    int a=2*dx;
+    int b=2*dy;
     
-    int x = to.heigth;
-    int y = to.width;
-    
-    double error= 0.0;
-    double s=dy/dx;
-    
-    while(x<=from.heigth){
-        
-        if(m_data[x][y]->isTransparent()){//überprüfung        
-        x++;
-        error+=s;
-        if (error>0.5){
-            y++;
-            error--;
+    if(dy<=dx){
+        int f=-dx;
+        while (x!=to.heigth)
+        {
+      if(m_data[x][y]->isTransparent()==false){
+              return false;
+          }
+       f=f+b;
+       if(f>0){
+           y=y+ystep;
+           f=f-a;
+       }
+       x=x+xstep;
         }
-        
     }else{
-            return false;
+        int f=-dy;
+        while (y!=to.width)
+        {
+          if(m_data[x][y]->isTransparent()==false){
+              return false;
+          }
+            f=f+a;
+            if(f>0){
+                x=x+xstep;
+                f=f-b;
+            }
+            y=y+ystep;
+        }
     }
-        return true;
-}
+    if(m_data[x][y]->isTransparent()==false){
+              return false;
+          }else{
+    return true;
+          }
 }
