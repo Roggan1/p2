@@ -60,8 +60,8 @@ int Character::getMaxHP()
 
 void Character::showInfo()
 {
-    cout<<"Stamina: "<<stamina<<endl;
-    cout<<"Strength: "<<strength<<endl;
+    cout<<"Stamina: "<<getStamina()<<endl;
+    cout<<"Strength: "<<getStrength()<<endl;
     cout<<"Hitpoints: "<<hitpoints<<"/"<<getMaxHP()<<endl;
     
 }
