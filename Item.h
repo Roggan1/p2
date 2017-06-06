@@ -36,7 +36,7 @@ public:
     int modifyStrength(int strength) override ;
 private:  
 };
-#endif /* ITEM_H */
+
 
 class ArmingSword : public Item {
 public:
@@ -107,3 +107,4 @@ public:
     int modifyStamina(int stamina) override;
     int modifyStrength(int strength) override;
 };
+#endif /* ITEM_H */

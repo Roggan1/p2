@@ -26,11 +26,11 @@ int main() {
         "##########",
     };
     vector<string> specialTiles{
-        "Character @ 5 5 ConsoleController 9 9",
+        "Character @ 5 5 ConsoleController 8 8",
         "Character % 2 3 StationaryController 3 4",
         "Greatsword 1 4",
-        "Door 13 9 Lever 11 9",
-        "Trap 10 9"        
+        "Door 5 5 Lever 7 7",
+        "Trap 6 6"        
     };
     GameEngine ge(10,10,data,specialTiles);
     ge.run();
