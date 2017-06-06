@@ -20,10 +20,17 @@ class Floor : public Tile
 public:
     Floor();
     char getSymbol() override;
-
+    void placeItem(Item* ItemG) ;
+    
     virtual ~Floor();
 private:
 
+    void onEnter(Character* c, Tile* fromTile) override;
+
+private:
+
+    Item* ItemGround;
+    
 };
 
 #endif /* FLOOR_H */

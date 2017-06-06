@@ -69,3 +69,7 @@ void Tile::onEnter(Character* c, Tile* fromTile)
     
 }
 
+bool Tile::isTransparent()
+{
+    return true;
+}

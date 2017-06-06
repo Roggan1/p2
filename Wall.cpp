@@ -32,3 +32,8 @@ void Wall::onEnter(Character* c, Tile* fromTile)
     onLeave(fromTile);
     cout<<"Can not Enter Tile"<<endl;
 }
+
+bool Wall::isTransparent()
+{
+    return false;
+}

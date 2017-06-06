@@ -19,6 +19,7 @@ class Wall : public Tile {
 
 public:
     void onEnter(Character* c, Tile* fromTile) override;
+    bool isTransparent() override;
     
     Wall();
     char getSymbol() override;

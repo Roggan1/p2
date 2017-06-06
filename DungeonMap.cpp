@@ -68,16 +68,27 @@ void DungeonMap::place(Position pos, Character* c)
     m_data[pos.heigth][pos.width]->setCharacter(c);
 }
 
-void DungeonMap::placeDoor_Switch(Position D, Position S)
+void DungeonMap::placePassive_Active(Position P, Position A, Passive* pass, Active* act)
 {
-    delete m_data[D.heigth][D.width];
-    delete m_data[S.heigth][S.width];
+    delete m_data[P.heigth][P.width];
+    delete m_data[A.heigth][A.width];
     
-    m_data[D.heigth][D.width]=new Door;
-    m_data[S.heigth][S.width]=new Switch;
+    m_data[P.heigth][P.width]=pass;
+    m_data[A.heigth][A.width]=act;
     
-    dynamic_cast<Switch*>(m_data [S.heigth][S.width])->setP_Objekt(dynamic_cast<Passive*>(m_data[D.heigth][D.width]));
+     dynamic_cast<Switch*>(m_data [A.heigth][A.width])->setP_Objekt(dynamic_cast<Passive*>(m_data[P.heigth][P.width]));
     
+}
+
+void DungeonMap::placeSpecialTile(Position pos, Tile* Special)
+{
+    delete m_data[pos.heigth][pos.width];
+    m_data[pos.heigth][pos.width]=Special;
+}
+
+void DungeonMap::placeItem(Position pos,Item* ItemG)
+{
+    dynamic_cast<Floor*>(m_data[pos.heigth][pos.width])->placeItem(ItemG);
 }
 
 Position DungeonMap::findTile(Tile* t)
@@ -125,7 +136,7 @@ Position DungeonMap::findCharacter(Character* c)
     
 }
 
-void DungeonMap::print()
+void DungeonMap::print(Position from)
 {
     for (int i = 0; i < m_height; i++)
     {
@@ -136,11 +147,53 @@ void DungeonMap::print()
             {
                 cout << "+ ";
             }
+            else if(hasLineOfSight(from,findTile(m_data[i][j]))){
+                cout<<m_data[i][j]->getSymbol()<<" ";
+            }
             else
             {
-                cout<<m_data[i][j]->getSymbol()<<" ";
+                cout<<"# ";
             }
         }
     }
 
+}
+
+bool DungeonMap::hasLineOfSight(Position from, Position to)
+{
+    int dx, dy;
+    
+    if (from.heigth>to.heigth){
+     dx=from.heigth-to.heigth;
+    }else{
+         dx=to.heigth-from.heigth;
+    }
+    
+    if (from.width>to.width){
+     dy=from.width-to.width;
+    }else{
+        dy=to.width-from.width;
+    }
+    
+    int x = to.heigth;
+    int y = to.width;
+    
+    double error= 0.0;
+    double s=dy/dx;
+    
+    while(x<=from.heigth){
+        
+        if(m_data[x][y]->isTransparent()){//überprüfung        
+        x++;
+        error+=s;
+        if (error>0.5){
+            y++;
+            error--;
+        }
+        
+    }else{
+            return false;
+    }
+        return true;
+}
 }

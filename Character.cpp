@@ -29,6 +29,10 @@ Character::Character(char Figur,int Str, int Sta)
 
 Character::~Character()
 {
+    for(int i=0; i<Items.size();i++)
+    {
+        delete Items[i];
+    }
 }
 
 char Character::getFigur() const
@@ -85,4 +89,9 @@ int Character::getStrength()
         StreGes=StreGes+Items[i]->modifyStrength(strength);
     }
     return strength+StreGes;
+}
+
+int Character::loseHP(int Dmg)
+{
+    hitpoints = hitpoints - Dmg;
 }

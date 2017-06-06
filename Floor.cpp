@@ -23,6 +23,26 @@ Floor::~Floor()
 
 char Floor::getSymbol()
 {
-    return '.';
+
+    if (ItemGround)
+    {
+        return '*';
+    }
+    else
+    {
+        return '.';
+    }
 }
 
+void Floor::onEnter(Character* c, Tile* fromTile) {
+    m_Char = c;
+    if (ItemGround) {
+        m_Char->addItem(ItemGround);
+        ItemGround = nullptr;
+    }
+}
+
+void Floor::placeItem(Item* ItemG)
+{
+    ItemGround=ItemG;
+}

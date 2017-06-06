@@ -31,7 +31,8 @@ public:
     virtual void onLeave(Tile* toTile);
     virtual void onEnter(Character* c, Tile* fromTile);
     virtual char getSymbol() = 0;
-   
+    
+    virtual bool isTransparent();
     Tile(); //(Tiletype type)
     
     virtual ~Tile();

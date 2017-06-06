@@ -13,6 +13,8 @@
 #include "Floor.h"
 #include "Door.h"
 #include "Switch.h"
+#include "Lever.h"
+#include "Trap.h"
 
 struct Position {
         int heigth;
@@ -27,12 +29,15 @@ public:
     virtual ~DungeonMap();
     
     void place(Position pos, Character* c);
-    void placeDoor_Switch(Position pos_D, Position pos_S);
+    void placePassive_Active(Position pos_P, Position pos_A,Passive* pass, Active* act);
+    void placeSpecialTile(Position pos, Tile* Special);
+    void placeItem(Position pos,Item* ItemG);
     Position findTile(Tile* t);
     Tile* findTile(Position pos);
     Position findCharacter(Character* c);
-    void print();
+    void print(Position from);
     
+    bool hasLineOfSight(Position from, Position to);
 private:
     Tile*** m_data;
     int m_height;

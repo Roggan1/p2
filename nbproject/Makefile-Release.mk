@@ -44,9 +44,12 @@ OBJECTFILES= \
 	${OBJECTDIR}/Floor.o \
 	${OBJECTDIR}/GameEngine.o \
 	${OBJECTDIR}/Item.o \
+	${OBJECTDIR}/Lever.o \
 	${OBJECTDIR}/Passive.o \
+	${OBJECTDIR}/StationaryController.o \
 	${OBJECTDIR}/Switch.o \
 	${OBJECTDIR}/Tile.o \
+	${OBJECTDIR}/Trap.o \
 	${OBJECTDIR}/Wall.o \
 	${OBJECTDIR}/main.o
 
@@ -120,10 +123,20 @@ ${OBJECTDIR}/Item.o: Item.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Item.o Item.cpp
 
+${OBJECTDIR}/Lever.o: Lever.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Lever.o Lever.cpp
+
 ${OBJECTDIR}/Passive.o: Passive.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Passive.o Passive.cpp
+
+${OBJECTDIR}/StationaryController.o: StationaryController.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/StationaryController.o StationaryController.cpp
 
 ${OBJECTDIR}/Switch.o: Switch.cpp
 	${MKDIR} -p ${OBJECTDIR}
@@ -134,6 +147,11 @@ ${OBJECTDIR}/Tile.o: Tile.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Tile.o Tile.cpp
+
+${OBJECTDIR}/Trap.o: Trap.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Trap.o Trap.cpp
 
 ${OBJECTDIR}/Wall.o: Wall.cpp
 	${MKDIR} -p ${OBJECTDIR}

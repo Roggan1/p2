@@ -19,8 +19,155 @@ Item::Item()
 
 
 
+
 Item::~Item()
 {
     
 }
 
+class ArmingSword : public Item {
+public:
+
+    ArmingSword() {
+    };
+
+    virtual ~ArmingSword() {
+    };
+
+    int modifyStamina(int stamina) override {
+        return 0;
+    };
+
+    int modifyStrength(int strength) override {
+        return 3;
+    };
+};
+
+
+GreatSword::GreatSword()
+{
+
+}
+
+GreatSword::~GreatSword()
+{
+
+}
+
+int GreatSword::modifyStamina(int stamina)
+{
+return -1;
+}
+
+int GreatSword::modifyStrength(int strength)
+{
+return 5;
+}
+
+class Club : public Item {
+public:
+
+    Club() {
+    };
+
+    virtual ~Club() {
+    };
+
+    int modifyStamina(int stamina) override {
+        return 0;
+    };
+
+    int modifyStrength(int strength) override {
+        return static_cast<int> (strength / 2);
+    };
+};
+
+class RapierOrDagger : public Item {
+public:
+
+    RapierOrDagger() {
+    };
+
+    virtual ~RapierOrDagger() {
+    };
+
+    int modifyStamina(int stamina) override {
+        return 1;
+    };
+
+    int modifyStrength(int strength) override {
+        return 2;
+    };
+};
+
+class Gambeson : public Item {
+public:
+
+    Gambeson() {
+    };
+
+    virtual ~Gambeson() {
+    };
+
+    int modifyStamina(int stamina) override {
+        return 1;
+    };
+
+    int modifyStrength(int strength) override {
+        return 0;
+    };
+};
+
+class MailArmour : public Item {
+public:
+
+    MailArmour() {
+    };
+
+    virtual ~MailArmour() {
+    };
+
+    int modifyStamina(int stamina) override {
+        return 3;
+    };
+
+    int modifyStrength(int strength) override {
+        return 0;
+    };
+};
+
+class Shield : public Item {
+public:
+
+    Shield() {
+    };
+
+    virtual ~Shield() {
+    };
+
+    int modifyStamina(int stamina) override {
+        return stamina;
+    };
+
+    int modifyStrength(int strength) override {
+        return -1;
+    };
+};
+
+class FullPlateArmour : public Item {
+public:
+
+    FullPlateArmour() {
+    };
+
+    virtual ~FullPlateArmour() {
+    };
+
+    int modifyStamina(int stamina) override {
+        return 6;
+    };
+
+    int modifyStrength(int strength) override {
+        return -2;
+    };
+};

@@ -47,3 +47,13 @@ void Door::onEnter(Character* Char, Tile* fromTile)
         m_Char = Char;
     }
 }
+
+bool Door::isTransparent()
+{
+    if(m_Status)
+    {
+        return true;
+    }else{
+        return false;
+    }
+}

@@ -9,8 +9,11 @@
 
 #include "GameEngine.h"
 #include <sstream>
+#include "StationaryController.h"
+#include "Item.h"
 
-GameEngine::GameEngine(int height, int width, const vector<string>& data, const vector<string>& do_swi) : m_map(height, width, data) {
+GameEngine::GameEngine(int height, int width, const vector<string>& data, const vector<string>& specialTiles) : m_map(height, width, data) {
+    /*
     m_Chars.push_back(new Character('+',5,5));
     m_Controllers.push_back(new ConsoleController(m_Chars[0]));
     
@@ -18,27 +21,82 @@ GameEngine::GameEngine(int height, int width, const vector<string>& data, const 
     tmp.heigth=6;
     tmp.width=6;
     m_map.place(tmp,m_Chars[0]);
-    
+    */
     //Interpreter Door/Switch
     stringstream ss;
-    int Sx = 0;
-    int Sy = 0;
-    int Dx = 0;
-    int Dy = 0;
     
-    for(int i = 0; i< do_swi.size(); i++)
+    string cmd1;
+    string cmd2;
+    char c;
+    
+    int param1 = 0;
+    int param2 = 0;
+    int param3 = 0;
+    int param4 = 0;
+    
+    for(int i = 0; i< specialTiles.size(); i++)
     {
-        ss.str(do_swi[i]);
-        ss >> Dx >> Dy >> Sx >> Sy;
-        ss.clear();
-        Position D,S;                   //string-stream
+        ss.str(specialTiles[i]);
+        ss >> cmd1;
+        if (cmd1=="Character")
+        {
+                ss>> c >> param1 >> param2 >> cmd2 >> param3 >> param4;
+                ss.clear();
+                m_Chars.push_back(new Character(c,param1,param2));
+                if(cmd2=="ConsoleController"){
+                m_Controllers.push_back(new ConsoleController(m_Chars[m_Chars.size()-1]));
+                }else{
+                m_Controllers.push_back(new StationaryController(m_Chars[m_Chars.size()-1])); 
+                }
+                Position tmp;
+                tmp.heigth=param3;
+                tmp.width=param4;
+                m_map.place(tmp,m_Chars[m_Chars.size()-1]);
+        }else if(cmd1=="Greatsword"){
+                ss>>param1>>param2;
+                ss.clear();
+                Position tmp;
+                tmp.heigth=param1;
+                tmp.width=param2;
+                m_map.placeItem(tmp, new GreatSword);
+        }else if(cmd1=="Door"){
+                ss>>param1>>param2>>cmd2>>param3>>param4;
+                ss.clear();
+                Position P,A;                   
+                P.heigth=param1;
+                P.width=param2;
+                A.heigth=param3;
+                A.width=param4;
+                
+                if(cmd2=="Switch"){
+                    m_map.placePassive_Active(P,A,new Door,new Switch);
+                }else{
+                    m_map.placePassive_Active(P,A,new Door,new Lever);
+                }
+        }else if(cmd1=="Trap"){
+                ss>>param1>>param2;
+                ss.clear();
+                Position tmp;
+                tmp.heigth=param1;
+                tmp.width=param2;
+                m_map.placeSpecialTile(tmp,new Trap);
+        }
+       
+      
+        
+        
+        
+        
+        /*
+        Position D,S;                   
         D.heigth=Dx;
         D.width=Dy;
         S.heigth=Sx;
         S.width=Sy;
         
         m_map.placeDoor_Switch(D,S);
-    }
+         */
+   }     
 }
 
 GameEngine::~GameEngine() {
@@ -112,7 +170,7 @@ void GameEngine::turn(){
 void GameEngine::run(){
     while(!finished()){
         m_Chars[0]->showInfo();
-        m_map.print();
+        m_map.print(m_map.findCharacter(m_Chars[0]));
         turn();
     }
 }

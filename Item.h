@@ -26,5 +26,16 @@ private:
 
 };
 
+
+class GreatSword : public Item {
+public:
+
+    GreatSword(); 
+    virtual ~GreatSword() ;
+
+    int modifyStamina(int stamina) override ;
+    int modifyStrength(int strength) override ;
+private:  
+};
 #endif /* ITEM_H */
 

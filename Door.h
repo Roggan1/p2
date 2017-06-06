@@ -20,7 +20,7 @@ class Door : public Passive
 public:
     void onEnter(Character* Char,Tile* fromTile) override;
     char getSymbol() override;
-    
+    bool isTransparent() override;    
     Door();
     
     virtual ~Door();

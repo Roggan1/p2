@@ -42,3 +42,5 @@ void Passive::onEnter(Character* c, Tile* fromTile)
     
 }
 
+
+
