@@ -17,32 +17,30 @@ Item::Item()
 {
 }
 
-
-
-
 Item::~Item()
 {
     
 }
 
-class ArmingSword : public Item {
-public:
+ArmingSword::ArmingSword()
+{
 
-    ArmingSword() {
-    };
+}
 
-    virtual ~ArmingSword() {
-    };
+ArmingSword::~ArmingSword()
+{
 
-    int modifyStamina(int stamina) override {
-        return 0;
-    };
+}
 
-    int modifyStrength(int strength) override {
-        return 3;
-    };
-};
+int ArmingSword::modifyStamina(int stamina)
+{
+ return 0;
+}
 
+int ArmingSword::modifyStrength(int strength)
+{
+return 3;
+}
 
 GreatSword::GreatSword()
 {
@@ -64,110 +62,128 @@ int GreatSword::modifyStrength(int strength)
 return 5;
 }
 
-class Club : public Item {
-public:
+Club::Club()
+{
 
-    Club() {
-    };
+}
 
-    virtual ~Club() {
-    };
+Club::~Club()
+{
 
-    int modifyStamina(int stamina) override {
-        return 0;
-    };
+}
 
-    int modifyStrength(int strength) override {
-        return static_cast<int> (strength / 2);
-    };
-};
+int Club::modifyStamina(int stamina)
+{
+return 0;
+}
 
-class RapierOrDagger : public Item {
-public:
+int Club::modifyStrength(int strength)
+{
+return static_cast<int> (strength / 2);
+}
 
-    RapierOrDagger() {
-    };
+RapierOrDagger::RapierOrDagger()
+{
 
-    virtual ~RapierOrDagger() {
-    };
+}
 
-    int modifyStamina(int stamina) override {
-        return 1;
-    };
+RapierOrDagger::~RapierOrDagger()
+{
 
-    int modifyStrength(int strength) override {
-        return 2;
-    };
-};
+}
 
-class Gambeson : public Item {
-public:
+int RapierOrDagger::modifyStamina(int stamina)
+{
+return 1;
+}
 
-    Gambeson() {
-    };
+int RapierOrDagger::modifyStrength(int strength)
+{
+return 2;
+}
 
-    virtual ~Gambeson() {
-    };
+Gambeson::Gambeson()
+{
 
-    int modifyStamina(int stamina) override {
-        return 1;
-    };
+}
 
-    int modifyStrength(int strength) override {
-        return 0;
-    };
-};
+Gambeson::~Gambeson()
+{
 
-class MailArmour : public Item {
-public:
+}
 
-    MailArmour() {
-    };
+int Gambeson::modifyStamina(int stamina)
+{
+return 1;
+}
 
-    virtual ~MailArmour() {
-    };
+int Gambeson::modifyStrength(int strength)
+{
+return 0;
+}
 
-    int modifyStamina(int stamina) override {
-        return 3;
-    };
+MailArmour::MailArmour()
+{
 
-    int modifyStrength(int strength) override {
-        return 0;
-    };
-};
+}
 
-class Shield : public Item {
-public:
+MailArmour::~MailArmour()
+{
 
-    Shield() {
-    };
+}
 
-    virtual ~Shield() {
-    };
+int MailArmour::modifyStamina(int stamina)
+{
+return 3;
+}
 
-    int modifyStamina(int stamina) override {
-        return stamina;
-    };
+int MailArmour::modifyStrength(int strength)
+{
+return 0;
+}
 
-    int modifyStrength(int strength) override {
-        return -1;
-    };
-};
+Shield::Shield()
+{
 
-class FullPlateArmour : public Item {
-public:
+}
 
-    FullPlateArmour() {
-    };
+Shield::~Shield()
+{
 
-    virtual ~FullPlateArmour() {
-    };
+}
 
-    int modifyStamina(int stamina) override {
-        return 6;
-    };
+int Shield::modifyStamina(int stamina)
+{
+return stamina;
+}
 
-    int modifyStrength(int strength) override {
-        return -2;
-    };
-};
+int Shield::modifyStrength(int strength)
+{
+return -1;
+}
+
+FullPlateArmour::FullPlateArmour()
+{
+
+}
+
+FullPlateArmour::~FullPlateArmour()
+{
+
+}
+
+int FullPlateArmour::modifyStamina(int stamina)
+{
+return 6;
+}
+
+int FullPlateArmour::modifyStrength(int strength)
+{
+return -2;
+}
+
+    
+        
+    
+        
+ 
