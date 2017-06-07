@@ -72,23 +72,23 @@ void DungeonMap::placePassive_Active(Position P, Position A, Passive* pass, Acti
 {
     delete m_data[P.heigth][P.width];
     delete m_data[A.heigth][A.width];
-    
-    m_data[P.heigth][P.width]=pass;
-    m_data[A.heigth][A.width]=act;
-    
-     dynamic_cast<Active*>(m_data [A.heigth][A.width])->setP_Objekt(dynamic_cast<Passive*>(m_data[P.heigth][P.width]));
-    
+
+    m_data[P.heigth][P.width] = pass;
+    m_data[A.heigth][A.width] = act;
+
+    dynamic_cast<Active*> (m_data [A.heigth][A.width])->setP_Objekt(dynamic_cast<Passive*> (m_data[P.heigth][P.width]));
+
 }
 
 void DungeonMap::placeSpecialTile(Position pos, Tile* Special)
 {
     delete m_data[pos.heigth][pos.width];
-    m_data[pos.heigth][pos.width]=Special;
+    m_data[pos.heigth][pos.width] = Special;
 }
 
-void DungeonMap::placeItem(Position pos,Item* ItemG)
+void DungeonMap::placeItem(Position pos, Item* ItemG)
 {
-    dynamic_cast<Floor*>(m_data[pos.heigth][pos.width])->placeItem(ItemG);
+    dynamic_cast<Floor*> (m_data[pos.heigth][pos.width])->placeItem(ItemG);
 }
 
 Position DungeonMap::findTile(Tile* t)
@@ -108,7 +108,7 @@ Position DungeonMap::findTile(Tile* t)
 
         }
     }
-    
+
 }
 
 Tile* DungeonMap::findTile(Position pos)
@@ -133,7 +133,7 @@ Position DungeonMap::findCharacter(Character* c)
 
         }
     }
-    
+
 }
 
 void DungeonMap::print(Position from)
@@ -143,16 +143,17 @@ void DungeonMap::print(Position from)
         cout << endl;
         for (int j = 0; j < m_width; j++)
         {
-            if (m_data[i][j]->hasCharacter()&&hasLineOfSight(from,findTile(m_data[i][j])))
+            if (m_data[i][j]->hasCharacter() && hasLineOfSight(from, findTile(m_data[i][j])))
             {
-                cout << m_data[i][j]->getChar()->getFigur()<<" ";
+                cout << m_data[i][j]->getChar()->getFigur() << " ";
             }
-            else if(hasLineOfSight(from,findTile(m_data[i][j]))){
-                cout<<m_data[i][j]->getSymbol()<<" ";
-            }
-            else 
+            else if (hasLineOfSight(from, findTile(m_data[i][j])))
             {
-                cout<<"# ";
+                cout << m_data[i][j]->getSymbol() << " ";
+            }
+            else
+            {
+                cout << "# ";
             }
         }
     }
@@ -161,56 +162,65 @@ void DungeonMap::print(Position from)
 
 bool DungeonMap::hasLineOfSight(Position from, Position to)
 {
-    int x=from.heigth;
-    int y=from.width;
-    
-    int dx =to.heigth-from.heigth;
-    int dy =to.width-from.width;
-    int xstep=1;
-    int ystep=1;
-       
-    if(dx<0){
-        dx=-dx;
-        xstep=-1;
+    int x = from.heigth;
+    int y = from.width;
+
+    int dx = to.heigth - from.heigth;
+    int dy = to.width - from.width;
+    int xstep = 1;
+    int ystep = 1;
+
+    if (dx < 0)
+    {
+        dx = -dx;
+        xstep = -1;
     }
-    
-    if(dy<0){
-        dy=-dy;
-        ystep=-1;
+
+    if (dy < 0)
+    {
+        dy = -dy;
+        ystep = -1;
     }
-    int a=2*dx;
-    int b=2*dy;
-    
-    if(dy<=dx){
-        int f=-dx;
-        while (x!=to.heigth)
+    int a = 2 * dx;
+    int b = 2 * dy;
+
+    if (dy <= dx)
+    {
+        int f = -dx;
+        while (x != to.heigth)
         {
-      if(m_data[x][y]->isTransparent()==false){
-              return false;
-          }
-       f=f+b;
-       if(f>0){
-           y=y+ystep;
-           f=f-a;
-       }
-       x=x+xstep;
-        }
-    }else{
-        int f=-dy;
-        while (y!=to.width)
-        {
-          if(m_data[x][y]->isTransparent()==false){
-              return false;
-          }
-            f=f+a;
-            if(f>0){
-                x=x+xstep;
-                f=f-b;
+            if (m_data[x][y]->isTransparent() == false)
+            {
+                return false;
             }
-            y=y+ystep;
+            f = f + b;
+            if (f > 0)
+            {
+                y = y + ystep;
+                f = f - a;
+            }
+            x = x + xstep;
         }
     }
-   
+    else
+    {
+        int f = -dy;
+        while (y != to.width)
+        {
+            if (m_data[x][y]->isTransparent() == false)
+            {
+                return false;
+            }
+            f = f + a;
+            if (f > 0)
+            {
+                x = x + xstep;
+                f = f - b;
+            }
+            y = y + ystep;
+        }
+    }
+
     return true;
-     
+
 }

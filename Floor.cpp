@@ -15,6 +15,7 @@
 
 Floor::Floor()
 {
+    ItemGround = nullptr;
 }
 
 Floor::~Floor()

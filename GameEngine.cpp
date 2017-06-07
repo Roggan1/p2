@@ -15,7 +15,7 @@
 GameEngine::GameEngine(int height, int width, const vector<string>& data, const vector<string>& specialTiles) : m_map(height, width, data) {
     
     stringstream ss;
-    
+    m_counter = 0;
     string cmd1;
     string cmd2;
     char c;
@@ -138,7 +138,14 @@ GameEngine::~GameEngine() {
 }
 
 bool GameEngine::finished(){
+    if (m_counter <= 30)
+    {
     return false;
+    }
+    else
+    {
+        return true;
+    }
 }
 
 void GameEngine::turn(){
@@ -201,7 +208,7 @@ void GameEngine::turn(){
 }
 
 void GameEngine::run(){
-    while(!finished()){
+    while(finished()== false){
         m_Chars[0]->showInfo();
         m_map.print(m_map.findCharacter(m_Chars[0]));
         turn();

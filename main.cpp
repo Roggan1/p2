@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include "GameEngine.h"
 #include <fstream>
+#include <iostream>
 using namespace std;
 
 /*
@@ -54,11 +55,10 @@ void loadFromFile(string filename)
     int width;
     int height;
     ifs >> width >> height;
-    //ignoriert den Rest
+   
     getline(ifs, line);
     cout << width << " " << height << endl;
 
-    //Einlesen der Map (benötigt Textfile, dass sich an die Breite Hält)
     for (int i = 0; i < height ; i++) {
         getline(ifs, line);
         data.push_back(line);
