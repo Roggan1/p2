@@ -7,12 +7,16 @@
 
 #include <cstdlib>
 #include "GameEngine.h"
+#include <fstream>
 using namespace std;
 
 /*
  * 
  */
+void loadFromFile(string filename);
 int main() {
+    loadFromFile("level1.txt");
+    /*
     vector<string> data{
         "##########",
         "####.....#",
@@ -34,10 +38,41 @@ int main() {
     };
     GameEngine ge(10,10,data,specialTiles);
     ge.run();
+     */
 }
 
 
 void loadFromFile(string filename)
 {
-    
+     vector<string> data;
+    vector<string> do_swi;
+    ifstream ifs;
+    string line;
+
+    ifs.open(filename, ios::in);
+
+    int width;
+    int height;
+    ifs >> width >> height;
+    //ignoriert den Rest
+    getline(ifs, line);
+    cout << width << " " << height << endl;
+
+    //Einlesen der Map (benötigt Textfile, dass sich an die Breite Hält)
+    for (int i = 0; i < height ; i++) {
+        getline(ifs, line);
+        data.push_back(line);
+        cout << line << endl;
+    }
+
+    while (!ifs.eof()) {
+        getline(ifs, line);
+        cout << line << endl;
+        do_swi.push_back(line);
+    }
+
+    ifs.close();
+
+    GameEngine ge(height, width, data, do_swi);
+ge.run();
 }

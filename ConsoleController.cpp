@@ -28,6 +28,8 @@ int ConsoleController::move() const
     cin >> input;
     switch (input)
     {
+    case '0': return 0;
+    
     case '1': return 1;
 
     case '2': return 2;

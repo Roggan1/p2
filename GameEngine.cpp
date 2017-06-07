@@ -144,6 +144,11 @@ bool GameEngine::finished(){
 void GameEngine::turn(){
     for(int i = 0; i < m_Chars.size(); i++){
         int dir = m_Chars.at(i)->move(); //Abrufen der Bewegungsrichtung
+        
+        if (dir==0){
+            Menue(m_Chars[i]);
+        }else{
+        
         Position tmp = m_map.findCharacter(m_Chars.at(i)); //Speichern der Position des Characters
         Tile* before = m_map.findTile(tmp); //Speichern des Tiles for dem Spielzug
         
@@ -188,8 +193,10 @@ void GameEngine::turn(){
             break;
         default: ;
     }
+         m_counter++;
        Tile* after=m_map.findTile(tmp); //Speichern des Tiles nach dem Zug
        before->onLeave(after);
+    }
     }
 }
 
@@ -198,5 +205,34 @@ void GameEngine::run(){
         m_Chars[0]->showInfo();
         m_map.print(m_map.findCharacter(m_Chars[0]));
         turn();
+    }
+}
+
+void GameEngine::printMenue()
+{
+    std::cout << "1. Spielerinfos " << std::endl;
+    std::cout << "2. Zurück" << std::endl;
+    std::cout << "3. Beenden." << std::endl;
+}
+
+void GameEngine::Menue(Character* c)
+{
+    bool end = false;
+    while (!end)
+    {
+        printMenue();
+        int input;
+        std::cout << "Was möchten Sie tun?";
+        std::cin >> input;
+        switch (input)
+        {
+        case 1: c->showInfo();
+            break;
+        case 2: end = true;
+            break;
+        case 3: m_counter = 31; end = true;
+            break;
+
+        }
     }
 }
