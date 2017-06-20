@@ -20,6 +20,7 @@
 #..................#
 ####################
 Character @ 5 5 ConsoleController 9 9
+Character + 5 5 ConsoleController 11 11
 Character % 2 2 AttackController 1 2 0
 Greatsword 1 4
 Door 13 9 Lever 11 9

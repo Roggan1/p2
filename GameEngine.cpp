@@ -158,11 +158,14 @@ void GameEngine::turn(){
     for(int i = 0; i < m_Chars.size(); i++){
         
         if(m_Chars.at(i)->getHP()<=0){//Überprüfen ob Character noch am Leben
-            delete m_Chars.at(i);
+            
             if(dynamic_cast<ConsoleController*>(m_Chars.at(i)->getController())){
             m_PlayerChars--;
             }
-        }
+            m_map.findTile(m_map.findCharacter(m_Chars[i]))->setCharacter(nullptr);
+            delete m_Chars[i];
+            m_Chars.erase(m_Chars.begin()+i);
+        }else{
         
         int dir = m_Chars.at(i)->move(); //Abrufen der Bewegungsrichtung
         
@@ -222,6 +225,7 @@ void GameEngine::turn(){
        before->onLeave(after);
          }
     }
+        }
     }
 }
 
