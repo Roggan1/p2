@@ -54,15 +54,16 @@ void Character::setController(Controller* Controller) {
 }
 
 int Character::getMaxHP()
-{
+{   
     return getStamina() * 5 + 20;
 }
 
 void Character::showInfo()
 {
+    
     cout<<"Stamina: "<<getStamina()<<endl;
     cout<<"Strength: "<<getStrength()<<endl;
-    cout<<"Hitpoints: "<<hitpoints<<"/"<<getMaxHP()<<endl;
+    cout<<"Hitpoints: "<<getHP()<<"/"<<getMaxHP()<<endl;
     
 }
 
@@ -93,5 +94,14 @@ int Character::getStrength()
 
 int Character::loseHP(int Dmg)
 {
-    hitpoints = hitpoints - Dmg;
+    hitpoints = getHP() - Dmg;
+}
+
+int Character::getHP()
+{
+    if(hitpoints > getMaxHP())
+    {
+        hitpoints = getMaxHP();
+    }
+    return hitpoints;
 }

@@ -10,6 +10,7 @@
 #include "GameEngine.h"
 #include <sstream>
 #include "StationaryController.h"
+#include "AttackController.h"
 #include "Item.h"
 
 GameEngine::GameEngine(int height, int width, const vector<string>& data, const vector<string>& specialTiles) : m_map(height, width, data) {
@@ -24,6 +25,7 @@ GameEngine::GameEngine(int height, int width, const vector<string>& data, const 
     int param2 = 0;
     int param3 = 0;
     int param4 = 0;
+    int param5 = 0;
     
     for(int i = 0; i< specialTiles.size(); i++)
     {
@@ -31,11 +33,14 @@ GameEngine::GameEngine(int height, int width, const vector<string>& data, const 
         ss >> cmd1;
         if (cmd1=="Character")
         {
-                ss>> c >> param1 >> param2 >> cmd2 >> param3 >> param4;
+                ss>> c >> param1 >> param2 >> cmd2 >> param3 >> param4 >> param5;
                 ss.clear();
                 m_Chars.push_back(new Character(c,param1,param2));
                 if(cmd2=="ConsoleController"){
                 m_Controllers.push_back(new ConsoleController(m_Chars[m_Chars.size()-1]));
+                m_PlayerChars++;
+                }else if(cmd2=="AttackController"){
+                m_Controllers.push_back(new AttackController(m_Chars[m_Chars.size()-1],m_Chars[param5],&m_map));
                 }else{
                 m_Controllers.push_back(new StationaryController(m_Chars[m_Chars.size()-1])); 
                 }
@@ -138,7 +143,8 @@ GameEngine::~GameEngine() {
 }
 
 bool GameEngine::finished(){
-    if (m_counter <= 30)
+    
+    if (m_PlayerChars > 0)
     {
     return false;
     }
@@ -150,6 +156,14 @@ bool GameEngine::finished(){
 
 void GameEngine::turn(){
     for(int i = 0; i < m_Chars.size(); i++){
+        
+        if(m_Chars.at(i)->getHP()<=0){//Überprüfen ob Character noch am Leben
+            delete m_Chars.at(i);
+            if(dynamic_cast<ConsoleController*>(m_Chars.at(i)->getController())){
+            m_PlayerChars--;
+            }
+        }
+        
         int dir = m_Chars.at(i)->move(); //Abrufen der Bewegungsrichtung
         
         if (dir==0){
@@ -201,8 +215,12 @@ void GameEngine::turn(){
         default: ;
     }
          m_counter++;
+         if(m_map.findTile(tmp)->hasCharacter()){
+             Fight(m_Chars.at(i),m_map.findTile(tmp)->getChar());
+         }else{
        Tile* after=m_map.findTile(tmp); //Speichern des Tiles nach dem Zug
        before->onLeave(after);
+         }
     }
     }
 }
@@ -237,9 +255,17 @@ void GameEngine::Menue(Character* c)
             break;
         case 2: end = true;
             break;
-        case 3: m_counter = 31; end = true;
+        case 3: m_counter = 101; end = true;
             break;
 
         }
+    }
+}
+
+void GameEngine::Fight(Character* c1, Character* c2)
+{
+    c2->loseHP(c1->getStrength());
+    if(c2->getHP()>0){
+        c1->loseHP(c2->getStrength());
     }
 }

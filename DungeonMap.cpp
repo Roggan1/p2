@@ -5,6 +5,7 @@
  * Created on 9. Mai 2017, 14:42
  */
 
+#include <map>
 #include "DungeonMap.h"
 
 DungeonMap::DungeonMap(const int height, const int width)
@@ -162,6 +163,7 @@ void DungeonMap::print(Position from)
 
 bool DungeonMap::hasLineOfSight(Position from, Position to)
 {
+    //http://www.k-achilles.de/algorithmen/bresenham-gerade.pdf
     int x = from.heigth;
     int y = from.width;
 
@@ -223,4 +225,215 @@ bool DungeonMap::hasLineOfSight(Position from, Position to)
 
     return true;
 
+}
+bool operator<(Position left, Position right)
+{
+    if (left.heigth <= right.heigth) {
+        if (left.heigth < right.heigth)
+            return true;
+        else if (left.width < right.width)
+            return true;
+    }
+    return false;
+}
+
+bool operator<=(Position left, Position right)
+{
+    if (left.heigth <= right.heigth && left.width <= right.width)
+        return true;
+    return false;
+}
+
+bool operator<(Kante left, Kante right)
+{
+    if (left.a <= right.a && left.b <= right.b)
+    {
+        return false;
+    }
+    return true;
+}
+
+bool Position::operator==(Position right) const
+{
+    if (heigth == right.heigth && width == right.width)
+        return true;
+    return false;
+}
+
+Position& Position::operator=(Position right)
+{
+    heigth = right.heigth;
+    width = right.width;
+    return *this;
+}
+
+ostream& operator<<(std::ostream& os, Position pos)
+{
+    os << "( " << pos.heigth << ", " << pos.width << " )";
+    return os;
+}
+
+ostream& operator<<(std::ostream& os, Kante kante)
+{
+    os << "( " << kante.a.heigth << ", " << kante.a.width << " ) -> ( " << kante.b.heigth << ", " << kante.b.width << " )";
+    return os;
+}
+
+istream& operator>>(std::istream& is, Position& right)
+{
+    is >> right.heigth >> right.width;
+    return is;
+}
+
+int DungeonMap::getPathTo(Position from, Position to)       //https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
+{    
+    set<Position> Q;
+    map<Position,int> dist;
+    map<Position,Position> prev;
+    set<Position> neighbours;
+    std::set<Kante> kanten;
+    
+    for(int i = 0; i < m_width; i++)        //Q mit Knoten füllen
+    {
+        for(int j = 0; j < m_height; j++)
+        {
+            if (m_data[i][j]->isTransparent())
+            {      
+                Position p{i,j};
+                Q.insert(p);
+            }
+        }
+    }
+   //Knoten mit Kanten Verbinden (in Corp. mit Marco)
+    set<Position>::iterator first_pos_it;
+    set<Position>::iterator second_pos_it;
+    for (first_pos_it = Q.begin(); first_pos_it != Q.end(); ++first_pos_it) {
+        for (second_pos_it = Q.begin(); second_pos_it != Q.end(); ++second_pos_it) {
+            if ((abs(first_pos_it->heigth - second_pos_it ->heigth) == 0 && abs(first_pos_it->width - second_pos_it->width) == 1) 
+                    || (abs(first_pos_it->heigth - second_pos_it ->heigth) == 1 && abs(first_pos_it->width - second_pos_it->width) == 0) 
+                    || (abs(first_pos_it->heigth - second_pos_it ->heigth) == 1 && abs(first_pos_it->width - second_pos_it->width) == 1)) {
+                kanten.insert(Kante(Position(first_pos_it->heigth, first_pos_it->width), Position(second_pos_it->heigth, second_pos_it->width)));
+            }
+        }
+    }
+    
+     for (const auto& v : Q)    //Initialisierung
+     {
+        dist[v] = 15384;            //Default Distance
+        prev[v] = Position(0, 0);   //Default Previous Position
+
+    }
+    
+    dist[from] = 0;                 //Distance von Anfang zu Anfang
+    
+    while(!Q.empty())       //Knoten mit der kleinsten Distance wird benutzt
+    {
+        Position u = getMinDist(Q, dist);   //kleinste Distance wird an u gesetzt
+        Q.erase(u);                 //Benutzter Knoten wird aus Q gelöscht
+        
+        neighbours.clear();         //neue Nachbarn werden gesetzt
+        neighbours = getNeighbours(u, kanten);  //erzeugen der Nachbar Knoten
+        
+        int alt;                    
+
+        for (auto& v : neighbours) {    //wenn v in Q vorhanden ist
+            alt = dist[u] + 1;
+            if (alt < dist[v]) {        //
+                dist[v] = alt;
+                prev[v] = u;
+            }
+        }
+    }
+    Position u = to;
+    list<Position> sequence;
+    while (!(prev[u] == Position(0, 0))) {      //
+        sequence.insert(sequence.begin(), u);
+        u = prev[u];
+    }
+    
+    if (sequence.empty())
+        cout << "Es konnte kein Weg gefunden werden!" << endl;
+    
+    //for (auto& i : sequence) {
+     //   cout << "Steps: " << i << endl;
+    //}
+    
+    to = *(sequence.begin());           //Move zu Position in int Wert übersetzen
+    
+        if (to == from) {
+        return 5;
+    } else if ((to.heigth - from.heigth) == 0) {
+        if ((to.width - from.width) <= -1)
+            return 4;
+        else if ((to.width - from.width >= 1))
+            return 6;
+    } else if ((to.width - from.width) == 0) {
+        if ((to.heigth - from.heigth) <= -1)
+            return 8;
+        else if ((to.heigth - from.heigth) >= 1)
+            return 2;
+    } else if ((to.heigth - from.heigth) <= -1) {
+        if ((to.width - from.width) <= -1)
+            return 7;
+        else if ((to.width - from.width) >= 1)
+            return 9;
+    } else if ((to.heigth - from.heigth) >= 1) {
+        if ((to.width - from.width) <= -1)
+            return 1;
+        else if ((to.width - from.width) >= 1)
+            return 3;
+    }
+    
+    return 5;
+}       
+
+
+Position DungeonMap::getMinDist(set<Position>& Q, map<Position, int>& dist) const
+{
+    int min = numeric_limits<int>::max();
+    Position return_pos(0, 0);
+    for (auto& pos : Q) {
+        if (dist[pos] <= min) {
+            min = dist[pos];
+            return_pos = pos;
+        }
+    }
+    return return_pos;
+}
+
+set<Position> DungeonMap::getNeighbours(Position pos,const set<Kante>& kanten) const 
+{
+    std::set<Position> return_set;
+    for (auto& kante : kanten) {
+        if (kante.a == pos) {
+            return_set.insert(kante.b);
+        } else if (kante.b == pos) {
+            return_set.insert(kante.a);
+        }
+    }
+    return return_set;
+}
+
+
+
+Position::Position()
+{
+    
+}
+
+Position::Position(int heigth1, int width1)
+{
+    heigth = heigth1;
+    width = width1;
+}
+
+Kante::Kante(Position pos1, Position pos2)
+{
+    if (pos1 < pos2) {
+        a = pos1;
+        b = pos2;
+    } else {
+        a = pos2;
+        b = pos1;
+    }
 }

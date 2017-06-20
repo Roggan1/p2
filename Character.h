@@ -29,10 +29,10 @@ public:
     char getFigur() const;
     int move() const;
     
+    int getHP();
     int getMaxHP();
     int getStrength();
     int getStamina();
-    
     void addItem(Item*);
     int loseHP(int Dmg);
     
@@ -48,6 +48,7 @@ private:
     char m_Figur;
     Controller* m_Controller;
     vector<Item*> Items;
+    
 };
 
 #endif /* CHARACTER_H */
