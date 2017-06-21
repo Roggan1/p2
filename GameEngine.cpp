@@ -195,8 +195,8 @@ void GameEngine::turn(){
             tmp.width++;
             
             break;
-        case 5: 
-            break;
+        //case 5: 
+        //    break;
         case 4: 
             tmp.width--;
            
@@ -215,10 +215,11 @@ void GameEngine::turn(){
             tmp.width--;
             
             break;
-        default: ;
+        default: 5;
     }
+             
          m_counter++;
-         if(m_map.findTile(tmp)->hasCharacter()){
+         if((m_map.findTile(tmp)->hasCharacter())&&(dir != 5)){
              Fight(m_Chars.at(i),m_map.findTile(tmp)->getChar());
          }else{
        Tile* after=m_map.findTile(tmp); //Speichern des Tiles nach dem Zug

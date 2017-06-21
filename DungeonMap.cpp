@@ -226,6 +226,7 @@ bool DungeonMap::hasLineOfSight(Position from, Position to)
     return true;
 
 }
+//Überladungen für STL Container
 bool operator<(Position left, Position right)
 {
     if (left.heigth <= right.heigth) {
@@ -267,31 +268,14 @@ Position& Position::operator=(Position right)
     return *this;
 }
 
-ostream& operator<<(std::ostream& os, Position pos)
-{
-    os << "( " << pos.heigth << ", " << pos.width << " )";
-    return os;
-}
-
-ostream& operator<<(std::ostream& os, Kante kante)
-{
-    os << "( " << kante.a.heigth << ", " << kante.a.width << " ) -> ( " << kante.b.heigth << ", " << kante.b.width << " )";
-    return os;
-}
-
-istream& operator>>(std::istream& is, Position& right)
-{
-    is >> right.heigth >> right.width;
-    return is;
-}
-
 int DungeonMap::getPathTo(Position from, Position to)       //https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
 {    
     set<Position> Q;
     map<Position,int> dist;
     map<Position,Position> prev;
     set<Position> neighbours;
-    std::set<Kante> kanten;
+    set<Kante> kanten;
+    list<Position> sequence;
     
     for(int i = 0; i < m_width; i++)        //Q mit Knoten füllen
     {
@@ -304,7 +288,7 @@ int DungeonMap::getPathTo(Position from, Position to)       //https://en.wikiped
             }
         }
     }
-   //Knoten mit Kanten Verbinden (in Corp. mit Marco)
+   //Knoten mit Kanten Verbinden 
     set<Position>::iterator first_pos_it;
     set<Position>::iterator second_pos_it;
     for (first_pos_it = Q.begin(); first_pos_it != Q.end(); ++first_pos_it) {
@@ -317,7 +301,7 @@ int DungeonMap::getPathTo(Position from, Position to)       //https://en.wikiped
         }
     }
     
-     for (const auto& v : Q)    //Initialisierung
+     for (auto& v : Q)    //Initialisierung
      {
         dist[v] = 15384;            //Default Distance
         prev[v] = Position(0, 0);   //Default Previous Position
@@ -336,27 +320,22 @@ int DungeonMap::getPathTo(Position from, Position to)       //https://en.wikiped
         
         int alt;                    
 
-        for (auto& v : neighbours) {    //wenn v in Q vorhanden ist
+        for (auto& v : neighbours) {    //Schaut es alle Nachbarn an
             alt = dist[u] + 1;
-            if (alt < dist[v]) {        //
-                dist[v] = alt;
+            if (alt < dist[v]) {        //vergleicht mit dem bisheringen kürzesten Weg
+                dist[v] = alt;          //-> wird geupdatet
                 prev[v] = u;
             }
         }
     }
     Position u = to;
-    list<Position> sequence;
-    while (!(prev[u] == Position(0, 0))) {      //
+    while (!(prev[u] == Position(0, 0))) {      //alle Knoten die nicht den default Wert haben werden in die Sequenz geladen
         sequence.insert(sequence.begin(), u);
         u = prev[u];
     }
     
     if (sequence.empty())
         cout << "Es konnte kein Weg gefunden werden!" << endl;
-    
-    //for (auto& i : sequence) {
-     //   cout << "Steps: " << i << endl;
-    //}
     
     to = *(sequence.begin());           //Move zu Position in int Wert übersetzen
     
@@ -390,10 +369,10 @@ int DungeonMap::getPathTo(Position from, Position to)       //https://en.wikiped
 
 Position DungeonMap::getMinDist(set<Position>& Q, map<Position, int>& dist) const
 {
-    int min = numeric_limits<int>::max();
-    Position return_pos(0, 0);
+    int min = numeric_limits<int>::max();   //Mindestwert zum Vergleich
+    Position return_pos(0, 0);              
     for (auto& pos : Q) {
-        if (dist[pos] <= min) {
+        if (dist[pos] <= min) {             //Distancen werden Verglichen
             min = dist[pos];
             return_pos = pos;
         }
@@ -403,11 +382,11 @@ Position DungeonMap::getMinDist(set<Position>& Q, map<Position, int>& dist) cons
 
 set<Position> DungeonMap::getNeighbours(Position pos,const set<Kante>& kanten) const 
 {
-    std::set<Position> return_set;
-    for (auto& kante : kanten) {
-        if (kante.a == pos) {
+    set<Position> return_set;           
+    for (auto& kante : kanten) {            
+        if (kante.a == pos) {               //Schaut wenn es der erste Nachbar die Position ist wird der zweite Nachbar hinzugefügt
             return_set.insert(kante.b);
-        } else if (kante.b == pos) {
+        } else if (kante.b == pos) {        //Schaut wenn der zweite Nachbar die Position ist wird der erste Nachbar hinzugefügt
             return_set.insert(kante.a);
         }
     }
@@ -415,7 +394,7 @@ set<Position> DungeonMap::getNeighbours(Position pos,const set<Kante>& kanten) c
 }
 
 
-
+//Konstruktoren
 Position::Position()
 {
     

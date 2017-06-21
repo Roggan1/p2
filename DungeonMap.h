@@ -37,9 +37,6 @@ struct Position {
     
 bool operator<(Kante left, Kante right);
 bool operator<(Position left, Position right);
-ostream& operator<<(ostream& os, Position pos);
-ostream& operator<<(ostream& os, Kante kante);
-istream& operator>>(istream& is, Position& right);
 
 class DungeonMap {
 public:
